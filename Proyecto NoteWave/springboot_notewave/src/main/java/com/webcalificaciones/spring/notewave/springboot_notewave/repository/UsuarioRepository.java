@@ -1,8 +1,6 @@
 package com.webcalificaciones.spring.notewave.springboot_notewave.repository;
 
-
-
-import com.webcalificaciones.notewave.model.Usuario;
+import com.webcalificaciones.spring.notewave.springboot_notewave.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
