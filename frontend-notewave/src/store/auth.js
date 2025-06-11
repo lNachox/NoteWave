@@ -82,6 +82,19 @@ export const useAuthStore = defineStore('auth', {
       this.registeredUsers = [...mockUsers.users];
       localStorage.setItem('registeredUsers', JSON.stringify(this.registeredUsers));
       this.logout();
+    },
+
+    // Método para actualizar la lista de usuarios registrados
+    updateRegisteredUsers(users) {
+      this.registeredUsers = users;
+      localStorage.setItem('registeredUsers', JSON.stringify(users));
+      // Si el usuario actual existe en la nueva lista, mantenerlo; si no, cerrar sesión
+      if (this.user) {
+        const currentUser = users.find(u => u.rut === this.user.rut);
+        if (!currentUser) {
+          this.logout();
+        }
+      }
     }
   }
 });

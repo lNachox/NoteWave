@@ -47,6 +47,14 @@
       "password": "123456",
       "role": "administrador",
       "createdAt": "2024-03-20T12:30:00.000Z"
+    },
+    {
+        "name": "Chris Admin",
+        "rut": "21140151-6",
+        "email": "chris.admin@notewave.com",
+        "password": "123456",
+        "role": "administrador",
+        "createdAt": "2024-03-20T12:30:00.000Z"
     }
   ]
 } 
