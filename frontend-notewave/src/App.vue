@@ -1,11 +1,10 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <LoginPage/>
+  <router-view/>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import LoginPage from './pages/auth/UserLogin.vue'
 
 /*
 export default {
@@ -16,10 +15,7 @@ export default {
 }
   */
 export default {
-  name: 'App',
-  components: {
-    LoginPage
-  }
+  name: 'App'
 } 
 </script>
 

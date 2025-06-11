@@ -6,7 +6,7 @@
     <input v-model="email" type="email" placeholder="Correo electrónico" />
     <input v-model="password" type="password" placeholder="Contraseña" />
     <button @click="handleRegister">Registrarse</button>
-    <p>¿Ya tienes una cuenta? <a href="/frontend-notewave/src/pages/auth/UserLogin.vue" @click.prevent="goToLogin">Iniciar sesión</a></p>
+    <p>¿Ya tienes una cuenta? <a @click.prevent="goToLogin">Iniciar sesión</a></p>
     <p v-if="error" class="text-red">{{ error }}</p>
   </div>
 </template>

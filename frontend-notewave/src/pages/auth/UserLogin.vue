@@ -4,7 +4,7 @@
     <input v-model="rut" placeholder="Ingrese su RUT" />
     <input v-model="password" type="password" placeholder="Contraseña" />
     <button @click="handleLogin">Entrar</button>
-    <p>¿No tienes una cuenta? <a href="/frontend-notewave/src/pages/auth/UserRegister.vue" @click.prevent="goToRegister">Regístrate aquí</a></p>
+    <p>¿No tienes una cuenta? <a @click.prevent="goToRegister">Regístrate aquí</a></p>
     <p v-if="error" class="text-red">{{ error }}</p>
   </div>
 </template>
