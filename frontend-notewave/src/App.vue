@@ -1,11 +1,11 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HomeView msg="Welcome to Your Vue.js App"/>
+  <LoginPage/>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import HomeView from './views/HomeView.vue'
+import LoginPage from './pages/auth/UserLogin.vue'
 
 /*
 export default {
@@ -17,8 +17,8 @@ export default {
   */
 export default {
   name: 'App',
-  views: {
-    HomeView
+  components: {
+    LoginPage
   }
 } 
 </script>
