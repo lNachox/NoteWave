@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../pages/auth/UserLogin.vue';
+import Register from '../pages/auth/UserRegister.vue';
 import StudentDashboard from '../pages/student/StudentDashboard.vue';
 import TeacherDashboard from '../pages/teacher/TeacherDashboard.vue';
 import AdminDashboard from '../pages/admin/AdminDashboard.vue';
@@ -9,6 +10,7 @@ import { useAuthStore } from '../store/auth';
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
+  { path: '/register', component: Register },
   { path: '/unauthorized', component: Unauthorized },
   {
     path: '/student',

@@ -1,10 +1,12 @@
 <template>
-  <div class="login">
-    <h2>Iniciar Sesión</h2>
-    <input v-model="rut" placeholder="Ingrese su RUT" />
+  <div class="register">
+    <h2>Registro de Usuario</h2>
+    <input v-model="name" placeholder="Nombre" />
+    <input v-model="rut" placeholder="RUT" />
+    <input v-model="email" type="email" placeholder="Correo electrónico" />
     <input v-model="password" type="password" placeholder="Contraseña" />
-    <button @click="handleLogin">Entrar</button>
-    <p>¿No tienes una cuenta? <a href="/frontend-notewave/src/pages/auth/UserRegister.vue" @click.prevent="goToRegister">Regístrate aquí</a></p>
+    <button @click="handleRegister">Registrarse</button>
+    <p>¿Ya tienes una cuenta? <a href="/frontend-notewave/src/pages/auth/UserLogin.vue" @click.prevent="goToLogin">Iniciar sesión</a></p>
     <p v-if="error" class="text-red">{{ error }}</p>
   </div>
 </template>
@@ -14,7 +16,9 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../../store/auth';
 
+const name = ref('');
 const rut = ref('');
+const email = ref('');
 const password = ref('');
 const error = ref(null);
 const router = useRouter();
@@ -58,44 +62,54 @@ function validarRut(rutValue) {
   return dvCalculado === dvInput;
 }
 
-const handleLogin = async () => {
+const handleRegister = async () => {
   error.value = null;
-  
-  // Primero, verifica que el RUT tenga el formato y dígito verificador correctos
+
+  // Validar campos requeridos
+  if (!name.value || !rut.value || !email.value || !password.value) {
+    error.value = 'Todos los campos son requeridos.';
+    return;
+  }
+
+  // Validar formato de correo electrónico
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.value)) {
+    error.value = 'Por favor ingrese un correo electrónico válido.';
+    return;
+  }
+
+  // Validar RUT
   if (!validarRut(rut.value)) {
     error.value = 'El RUT ingresado es inválido.';
     return;
   }
-  
+
   try {
-    await auth.login({ rut: rut.value, password: password.value });
-    
-    // Redirigir según el rol del usuario
-    if (auth.user.role === 'estudiante') {
-      router.push('/student');
-    } else if (auth.user.role === 'docente') {
-      router.push('/teacher');
-    } else if (auth.user.role === 'administrador') {
-      router.push('/admin');
-    }
+    await auth.register({
+      name: name.value,
+      rut: rut.value,
+      email: email.value,
+      password: password.value
+    });
+    router.push('/login');
   } catch (e) {
     error.value = e.message;
   }
 };
 
-const goToRegister = () => {
-  router.push('/register');
+const goToLogin = () => {
+  router.push('/login');
 };
 </script>
 
-<style>
-.login {
-  max-width: 300px; 
-  margin: auto; 
+<style scoped>
+.register {
+  max-width: 300px;
+  margin: auto;
   padding: 20px;
 }
 
-.login input {
+.register input {
   width: 100%;
   padding: 8px;
   margin: 8px 0;
@@ -103,7 +117,7 @@ const goToRegister = () => {
   border-radius: 4px;
 }
 
-.login button {
+.register button {
   width: 100%;
   padding: 10px;
   background-color: #4CAF50;
@@ -114,7 +128,7 @@ const goToRegister = () => {
   margin: 10px 0;
 }
 
-.login button:hover {
+.register button:hover {
   background-color: #45a049;
 }
 
@@ -130,4 +144,4 @@ a {
 a:hover {
   text-decoration: underline;
 }
-</style>
+</style> 
