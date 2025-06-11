@@ -1,42 +1,87 @@
 import { defineStore } from 'pinia';
+import mockUsers from '../data/mockUsers.json';
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    user: null,
-  }),
+  state: () => {
+    // Initialize localStorage with mock users if it's empty
+    if (!localStorage.getItem('registeredUsers')) {
+      localStorage.setItem('registeredUsers', JSON.stringify(mockUsers.users));
+    }
+
+    return {
+      user: JSON.parse(localStorage.getItem('user')) || null,
+      registeredUsers: JSON.parse(localStorage.getItem('registeredUsers')) || []
+    };
+  },
+  
   actions: {
     login({ rut, password }) {
-      // Simulación de login con datos mock
-      if (rut === '1111' && password === '1234') {
-        this.user = { rut, role: 'estudiante' }; // cambiar a 'docente' o 'administrador'
-      } else if (rut === '2222' && password === '1234') {
-        this.user = { rut, role: 'docente' };
-      } else if (rut === '3333' && password === '1234') {
-        this.user = { rut, role: 'administrador' };
-      } else {
+      // Buscar el usuario en los usuarios registrados
+      const user = this.registeredUsers.find(u => u.rut === rut && u.password === password);
+      
+      if (!user) {
         throw new Error('Credenciales inválidas');
       }
+
+      // Guardar el usuario actual en el estado y localStorage
+      this.user = {
+        name: user.name,
+        rut: user.rut,
+        email: user.email,
+        role: user.role
+      };
+      
+      localStorage.setItem('user', JSON.stringify(this.user));
     },
+
     register({ name, rut, email, password }) {
-      // Simulación de registro
-      // En una implementación real, esto se conectaría con el backend
-      
-      // Validar que la contraseña tenga al menos 6 caracteres
-      if (password.length < 6) {
-        throw new Error('La contraseña debe tener al menos 6 caracteres');
-      }
-      
-      if (rut === '1111' || rut === '2222' || rut === '3333') {
+      // Verificar si el RUT ya está registrado
+      if (this.registeredUsers.some(user => user.rut === rut)) {
         throw new Error('El RUT ya está registrado');
       }
+
+      // Verificar si el email ya está registrado
+      if (this.registeredUsers.some(user => user.email === email)) {
+        throw new Error('El correo electrónico ya está registrado');
+      }
+
+      // Crear nuevo usuario
+      const newUser = {
+        name,
+        rut,
+        email,
+        password,
+        role: 'estudiante', // Por defecto, los nuevos registros son estudiantes
+        createdAt: new Date().toISOString()
+      };
+
+      // Agregar a la lista de usuarios registrados
+      this.registeredUsers.push(newUser);
       
-      // Simular registro exitoso
-      // En una implementación real, aquí se enviarían los datos al backend
-      console.log('Usuario registrado:', { name, rut, email });
-      return Promise.resolve();
+      // Guardar en localStorage
+      localStorage.setItem('registeredUsers', JSON.stringify(this.registeredUsers));
+
+      // Automáticamente iniciar sesión con el nuevo usuario
+      this.user = {
+        name: newUser.name,
+        rut: newUser.rut,
+        email: newUser.email,
+        role: newUser.role
+      };
+      
+      localStorage.setItem('user', JSON.stringify(this.user));
     },
+
     logout() {
       this.user = null;
+      localStorage.removeItem('user');
     },
-  },
+
+    // Método para reiniciar los usuarios a los valores iniciales del mock
+    resetToMockUsers() {
+      this.registeredUsers = [...mockUsers.users];
+      localStorage.setItem('registeredUsers', JSON.stringify(this.registeredUsers));
+      this.logout();
+    }
+  }
 });

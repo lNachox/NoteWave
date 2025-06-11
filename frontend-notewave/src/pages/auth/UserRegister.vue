@@ -84,6 +84,12 @@ const handleRegister = async () => {
     return;
   }
 
+  // Validar longitud mínima de la contraseña
+  if (password.value.length < 6) {
+    error.value = 'La contraseña debe tener al menos 6 caracteres.';
+    return;
+  }
+
   try {
     await auth.register({
       name: name.value,
@@ -91,7 +97,9 @@ const handleRegister = async () => {
       email: email.value,
       password: password.value
     });
-    router.push('/login');
+    
+    // Redirigir al dashboard de estudiante después del registro exitoso
+    router.push('/student');
   } catch (e) {
     error.value = e.message;
   }
