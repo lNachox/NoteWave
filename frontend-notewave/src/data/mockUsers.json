@@ -1,0 +1,60 @@
+{
+  "users": [
+    {
+      "name": "Juan Estudiante",
+      "rut": "11111111-1",
+      "email": "juan.estudiante1@notewave.com",
+      "password": "123456",
+      "role": "estudiante",
+      "createdAt": "2024-03-20T10:00:00.000Z"
+    },
+    {
+      "name": "María Estudiante",
+      "rut": "22222222-2",
+      "email": "maria.estudiante2@notewave.com",
+      "password": "123456",
+      "role": "estudiante",
+      "createdAt": "2024-03-20T10:30:00.000Z"
+    },
+    {
+      "name": "Pedro Profesor",
+      "rut": "33333333-3",
+      "email": "pedro.profesor1@notewave.com",
+      "password": "123456",
+      "role": "docente",
+      "createdAt": "2024-03-20T11:00:00.000Z"
+    },
+    {
+      "name": "Ana Profesora",
+      "rut": "44444444-4",
+      "email": "ana.profesora2@notewave.com",
+      "password": "123456",
+      "role": "docente",
+      "createdAt": "2024-03-20T11:30:00.000Z"
+    },
+    {
+      "name": "Carlos Admin",
+      "rut": "55555555-5",
+      "email": "carlos.admin1@notewave.com",
+      "password": "123456",
+      "role": "administrador",
+      "createdAt": "2024-03-20T12:00:00.000Z"
+    },
+    {
+      "name": "Laura Admin",
+      "rut": "66666666-6",
+      "email": "laura.admin2@notewave.com",
+      "password": "123456",
+      "role": "administrador",
+      "createdAt": "2024-03-20T12:30:00.000Z"
+    },
+    {
+        "name": "Chris Admin",
+        "rut": "21140151-6",
+        "email": "chris.admin@notewave.com",
+        "password": "123456",
+        "role": "administrador",
+        "createdAt": "2024-03-20T12:30:00.000Z"
+    }
+  ]
+} 
